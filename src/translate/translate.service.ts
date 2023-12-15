@@ -10,6 +10,7 @@ const KEY = 'k12lgUTfz72DWUQfGPG88Y9suC7CzfC2';
 export class TranslateService {
   async create(createTranslateDto: CreateTranslateDto) {
     try {
+      console.log('@@@@translate', createTranslateDto);
       // 调用百度翻译接口
       const token_url = `https://aip.baidubce.com/oauth/2.0/token?client_id=${APP_ID}&client_secret=${KEY}&grant_type=client_credentials`;
       const result = await axios.post(token_url);
