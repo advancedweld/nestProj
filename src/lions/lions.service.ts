@@ -4,14 +4,21 @@ import { UpdateLionDto } from './dto/update-lion.dto';
 import { Lion } from './entities/lion.entity';
 @Injectable()
 export class LionsService {
-  private readonly lions: Lion = [];
+  private readonly lions: Lion[] = [
+    {
+      name: 'xiaohong',
+      age: 15,
+      color: 'yellow',
+      breed: 'AA',
+    },
+  ];
 
   create(createLionDto: CreateLionDto) {
-    return 'This action adds a new lion';
+    this.lions.push(createLionDto);
   }
 
-  findAll() {
-    return `This action returns all lions`;
+  findAll(): Lion[] {
+    return this.lions;
   }
 
   findOne(id: number) {
