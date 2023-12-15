@@ -20,9 +20,16 @@ export class TranslateController {
 
   @Post()
   // 状态码/响应头什么的 在service里设置
-  create(@Body() createTranslateDto: CreateTranslateDto, @Res() res: Response) {
-    console.log('@@@@@translate  start');
-    this.translateService.create(createTranslateDto, res);
+  async create(
+    @Body() createTranslateDto: CreateTranslateDto,
+    @Res() res: Response,
+  ) {
+    const translate_result = await this.translateService.create(
+      createTranslateDto,
+    );
+    res.status(200).setHeader('my-token', 'xiangshangzhi').send({
+      content: translate_result,
+    });
   }
 
   @Get()

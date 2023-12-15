@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Response } from 'express';
 import { CreateTranslateDto } from './dto/create-translate.dto';
 import { UpdateTranslateDto } from './dto/update-translate.dto';
@@ -8,7 +8,7 @@ const APP_ID = '1BsG96kKU6royQ0ZtOwmBlAv';
 const KEY = 'k12lgUTfz72DWUQfGPG88Y9suC7CzfC2';
 @Injectable()
 export class TranslateService {
-  async create(createTranslateDto: CreateTranslateDto, res: Response) {
+  async create(createTranslateDto: CreateTranslateDto) {
     try {
       // 调用百度翻译接口
       const token_url = `https://aip.baidubce.com/oauth/2.0/token?client_id=${APP_ID}&client_secret=${KEY}&grant_type=client_credentials`;
@@ -24,15 +24,11 @@ export class TranslateService {
       });
 
       const translateResult = transResponse.data.result.trans_result[0].dst;
-      // service里设置状态码。响应头
-      res.status(200).setHeader('my-token', 'xiangshangzhi').send({
-        content: translateResult,
-      });
+      return translateResult;
     } catch (error) {
-      res.status(500).send({
-        message: error?.message || 'Unexpected error.',
-      });
-      console.log(error);
+      // todo: 错误处理， 记录日志
+      Logger.error(error);
+      throw new Error('Failed to translate text.');
     }
   }
 
