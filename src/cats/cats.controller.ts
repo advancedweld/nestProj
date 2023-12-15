@@ -5,10 +5,11 @@ import {
   Req,
   HttpCode,
   Param,
+  Body,
   Header,
 } from '@nestjs/common';
 import { Request } from 'express';
-
+import { CreateCatDto } from './create-cat.dto';
 @Controller('cats')
 export class CatsController {
   @Post()
@@ -16,14 +17,21 @@ export class CatsController {
   // @header 自定义响应头
   @Header('Cache-Control', 'none')
   @Header('my-token', 'xiangshangzhi')
-  create(): string {
+  create(@Body() body: CreateCatDto): string {
+    console.log(body);
     return 'This action adds a new cat';
   }
 
   @Get()
   // @req 装饰器获取请求头
-  findAll(@Req() request: Request): string {
+  async findAll(@Req() request: Request): Promise<string> {
     console.log('@@@request', request.body);
+    // 等待3s后resolve
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(true);
+      }, 3000);
+    });
     return 'This action returns all cats';
   }
 
