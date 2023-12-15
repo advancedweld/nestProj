@@ -9,4 +9,14 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
+  @Get('xiang')
+  getXiang(): any {
+    return {
+      name: 'xiang',
+      age: 18,
+      sex: 'male',
+      hobbies: ['swimming', 'reading', 'coding'],
+    };
+  }
 }
