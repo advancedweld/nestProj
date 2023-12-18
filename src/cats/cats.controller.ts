@@ -9,6 +9,8 @@ import {
   Header,
   HttpException,
   HttpStatus,
+  ParseIntPipe,
+  ValidationPipe,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { CreateCatDto } from './create-cat.dto';
@@ -19,7 +21,7 @@ export class CatsController {
   // @header 自定义响应头
   @Header('Cache-Control', 'none')
   @Header('my-token', 'xiangshangzhi')
-  create(@Body() body: CreateCatDto): string {
+  create(@Body(ValidationPipe) body: CreateCatDto): string {
     console.log(body);
     return 'This action adds a new cat';
   }
@@ -38,11 +40,11 @@ export class CatsController {
     return 'This action returns all cats';
   }
 
-  // 带参数路由
+  // 带参数路由 ParseIntPipe 管道验证
   @Get(':id')
-  findOne(@Param() params: any): string {
-    console.log(params.id);
-    return `This action returns a #${params.id} cat`;
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    console.log(id);
+    return `This action returns a #${id} cat`;
   }
 
   // findOne(@Param('id') id: string): string {
