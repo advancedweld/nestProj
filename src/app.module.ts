@@ -15,7 +15,6 @@ import { User } from './users/entities/user.entity';
   imports: [
     // 接入mysql数据库
     TypeOrmModule.forRoot({
-      // driver: 'mysql2',
       type: 'mysql', //数据库类型
       host: 'localhost', //host
       port: 3306,
@@ -23,20 +22,9 @@ import { User } from './users/entities/user.entity';
       password: '123456', //密码
       database: 'test', //库名
       entities: [],
-      synchronize: true, //synchronize字段代表是否自动将实体类同步到数据库，实体类如果定义好了设置为 false 不然会导致实体的强替换，清空修改过的属性列中的数据
+      synchronize: false, //synchronize字段代表是否自动将实体类同步到数据库，实体类如果定义好了设置为 false 不然会导致实体的强替换，清空修改过的属性列中的数据
       autoLoadEntities: true, //如果为true,将自动加载实体 forFeature()方法注册的每个实体都将自动添加到配置对象的实体数组中
     }),
-    // TypeOrmModule.forRoot({
-    //   type: 'mysql',
-    //   host: 'localhost',
-    //   port: 3306,
-    //   username: 'root',
-    //   password: '123456',
-    //   database: 'test',
-    //   entities: [User],
-    //   // 生产环境不应该使用 synchronize: true，否则可能丢失数据
-    //   synchronize: false,
-    // }),
     UsersModule,
     TranslateModule,
     LionsModule,

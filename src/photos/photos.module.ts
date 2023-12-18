@@ -5,7 +5,9 @@ import { DataSource } from 'typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [TypeOrmModule.forRoot()],
+  // 这么写会报错，MissingDriverError: Wrong driver: "undefined" given.
+
+  // imports: [TypeOrmModule.forRoot({})],
   controllers: [PhotosController],
   providers: [PhotosService],
 })
