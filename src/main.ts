@@ -3,6 +3,9 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
+
+  // 应用全局中间件
+  // app.use(logger);
   await app.listen(3000);
   console.log('Server running on port 3000');
 }

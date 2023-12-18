@@ -7,6 +7,8 @@ import {
   Param,
   Body,
   Header,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { CreateCatDto } from './create-cat.dto';
@@ -25,6 +27,8 @@ export class CatsController {
   @Get()
   // @req 装饰器获取请求头
   async findAll(@Req() request: Request): Promise<string> {
+    // 抛出异常
+    // throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
     // 等待3s后resolve
     await new Promise((resolve) => {
       setTimeout(() => {
