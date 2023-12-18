@@ -25,7 +25,6 @@ export class CatsController {
   @Get()
   // @req 装饰器获取请求头
   async findAll(@Req() request: Request): Promise<string> {
-    console.log('@@@request', request.body);
     // 等待3s后resolve
     await new Promise((resolve) => {
       setTimeout(() => {

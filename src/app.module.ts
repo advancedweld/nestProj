@@ -6,7 +6,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { TranslateModule } from './translate/translate.module';
 import { LionsModule } from './lions/lions.module';
-import { LoggerMiddleware } from './middleware/logger.middleware';
+import { LoggerMiddleware, logger } from './middleware/logger.middleware';
 @Module({
   imports: [UsersModule, TranslateModule, LionsModule],
   // 控制器始终属于一个模块，这就是我们在 @Module() 装饰器中包含 controllers 数组的原因。 由于我们还没有定义除根 AppModule 之外的任何其他模块，我们将使用它来引入 CatsController
@@ -17,5 +17,8 @@ export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     // 针对所有路由都生效
     consumer.apply(LoggerMiddleware).forRoutes('*');
+
+    // 应用功能中间件
+    consumer.apply(logger).forRoutes(CatsController);
   }
 }
