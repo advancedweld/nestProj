@@ -20,7 +20,7 @@ import { PhotosModule } from './photos/photos.module';
       host: '8.140.248.120', //host
       port: 3306,
       username: 'root', //账号
-      password: 'xsz123456', //密码
+      password: '*****', //密码
       database: 'monitoring', //库名
       // entities: [User, Photo],
       synchronize: true, //synchronize字段代表是否自动将实体类同步到数据库，实体类如果定义好了设置为 false 不然会导致实体的强替换，清空修改过的属性列中的数据
