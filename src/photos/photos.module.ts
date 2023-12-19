@@ -3,11 +3,11 @@ import { PhotosService } from './photos.service';
 import { PhotosController } from './photos.controller';
 import { DataSource } from 'typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
+import { Photo } from './entities/photo.entity';
 @Module({
   // 这么写会报错，MissingDriverError: Wrong driver: "undefined" given.
 
-  // imports: [TypeOrmModule.forRoot({})],
+  imports: [TypeOrmModule.forFeature([Photo])],
   controllers: [PhotosController],
   providers: [PhotosService],
 })
