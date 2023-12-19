@@ -25,8 +25,9 @@ export class PhotosController {
   }
 
   @Get()
-  findAll() {
-    return this.photosService.findAll();
+  async findAll() {
+    const result = await this.photosService.findAll();
+    return result;
   }
 
   @Get(':id')

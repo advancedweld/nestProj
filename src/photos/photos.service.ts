@@ -24,8 +24,9 @@ export class PhotosService {
     return 'save success';
   }
 
-  findAll() {
-    return `This action returns all photos`;
+  async findAll() {
+    const photos = await this.photoRepository.find();
+    return photos;
   }
 
   findOne(id: number) {
