@@ -5,7 +5,7 @@ import { Request, Response, NextFunction } from 'express';
 export class LoggerMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     const start = Date.now();
-
+    console.log(`@@@@Recieve Request...`, req.url);
     res.on('finish', () => {
       const duration = Date.now() - start;
       console.log(`Request to ${req.originalUrl} took ${duration}ms`);

@@ -1,11 +1,27 @@
 import { Injectable } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreatePhotoDto } from './dto/create-photo.dto';
 import { UpdatePhotoDto } from './dto/update-photo.dto';
 
+import { Photo } from './entities/photo.entity';
 @Injectable()
 export class PhotosService {
-  create(createPhotoDto: CreatePhotoDto) {
-    return 'This action adds a new photo';
+  constructor(
+    @InjectRepository(Photo)
+    private photoRepository: Repository<Photo>,
+  ) {}
+  async create(createPhotoDto: CreatePhotoDto) {
+    // return 'This action adds a new photo';
+    const photo = new Photo();
+    photo.name = createPhotoDto.name;
+    photo.description = createPhotoDto.description;
+    photo.filename = createPhotoDto.filename;
+    photo.totalPages = createPhotoDto.totalPages;
+    photo.views = 100 * Math.random();
+    photo.isPublished = true;
+    await this.photoRepository.save(photo);
+    return 'save success';
   }
 
   findAll() {

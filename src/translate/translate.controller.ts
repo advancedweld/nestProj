@@ -24,9 +24,8 @@ export class TranslateController {
     @Body() createTranslateDto: CreateTranslateDto,
     @Res() res: Response,
   ) {
-    const translate_result = await this.translateService.create(
-      createTranslateDto,
-    );
+    const translate_result =
+      await this.translateService.create(createTranslateDto);
     res.status(200).setHeader('my-token', 'xiangshangzhi').send({
       content: translate_result,
     });

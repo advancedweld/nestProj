@@ -10,8 +10,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerMiddleware, logger } from './middleware/logger.middleware';
 import { PhotosModule } from './photos/photos.module';
 
-import { User } from './users/entities/user.entity';
-import { Photo } from './photos/entities/photo.entity';
+// import { User } from './users/entities/user.entity';
+// import { Photo } from './photos/entities/photo.entity';
 @Module({
   imports: [
     // 接入mysql数据库
