@@ -23,6 +23,13 @@ export class PhotosController {
       message: '操作成功！',
     });
   }
+  @Post('update')
+  async update(@Body() updatePhotoDto: UpdatePhotoDto, @Res() res: Response) {
+    await this.photosService.update(updatePhotoDto);
+    res.status(200).setHeader('my-token', 'xiangshangzhi').send({
+      message: '更新成功！',
+    });
+  }
 
   @Get()
   async findAll() {
@@ -31,17 +38,12 @@ export class PhotosController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.photosService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePhotoDto: UpdatePhotoDto) {
-    return this.photosService.update(+id, updatePhotoDto);
+  findOne(@Param('id') id: number) {
+    return this.photosService.findOne(id);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.photosService.remove(+id);
+  remove(@Param('id') id: number) {
+    return this.photosService.remove(id);
   }
 }

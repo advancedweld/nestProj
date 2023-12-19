@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreatePhotoDto } from './dto/create-photo.dto';
@@ -33,8 +37,34 @@ export class PhotosService {
     return `This action returns a #${id} photo`;
   }
 
-  update(id: number, updatePhotoDto: UpdatePhotoDto) {
-    return `This action updates a #${id} photo`;
+  async update(updatePhotoDto: UpdatePhotoDto) {
+    console.log('@@@@update phtot', updatePhotoDto);
+    const { id, name, description, filename, totalPages, isPublished } =
+      updatePhotoDto;
+    if (id === undefined) {
+      throw new BadRequestException('ID is missing in the request');
+    }
+    // 查找要更新的照片对象
+    const photoToUpdate = await this.photoRepository.findOneBy({
+      id,
+    });
+
+    if (!photoToUpdate) {
+      throw new NotFoundException(`Photo with ID ${id} not found`);
+    }
+
+    // 应用更新
+    photoToUpdate.name = name || photoToUpdate.name;
+    photoToUpdate.description = description || photoToUpdate.description;
+    photoToUpdate.filename = filename || photoToUpdate.filename;
+    photoToUpdate.totalPages = totalPages || photoToUpdate.totalPages;
+    photoToUpdate.isPublished =
+      isPublished !== undefined ? isPublished : photoToUpdate.isPublished;
+
+    // 保存更改到数据库
+    await this.photoRepository.save(photoToUpdate);
+
+    return `Photo with ID ${id} updated successfully`;
   }
 
   remove(id: number) {

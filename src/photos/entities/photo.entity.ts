@@ -5,6 +5,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
+import { IsInt, IsString } from 'class-validator';
 
 import { User } from '../../users/entities/user.entity';
 @Entity()
@@ -13,18 +14,23 @@ export class Photo {
   id: number;
 
   @Column({ length: 500 })
+  @IsString()
   name: string;
 
   @Column('int')
+  @IsInt()
   totalPages: number;
 
-  @Column('text')
+  // nullable声明可选参数
+  @Column({ nullable: true })
   description: string;
 
   @Column()
+  @IsString()
   filename: string;
 
   @Column('int')
+  @IsInt()
   views: number;
 
   @Column()
