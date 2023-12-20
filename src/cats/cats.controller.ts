@@ -22,7 +22,6 @@ export class CatsController {
   @Header('Cache-Control', 'none')
   @Header('my-token', 'xiangshangzhi')
   create(@Body(ValidationPipe) body: CreateCatDto): string {
-    console.log(body);
     return 'This action adds a new cat';
   }
 
@@ -43,12 +42,10 @@ export class CatsController {
   // 带参数路由 ParseIntPipe 管道验证
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
-    console.log(id);
     return `This action returns a #${id} cat`;
   }
 
   // findOne(@Param('id') id: string): string {
-  //   console.log(id);
   //   return `This action returns a #${id} cat`;
   // }
 }

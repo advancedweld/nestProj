@@ -38,7 +38,6 @@ export class PhotosService {
   }
 
   async update(updatePhotoDto: UpdatePhotoDto) {
-    console.log('@@@@update phtot', updatePhotoDto);
     const { id, name, description, filename, totalPages, isPublished } =
       updatePhotoDto;
     if (id === undefined) {
