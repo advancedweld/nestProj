@@ -19,6 +19,18 @@
 $ nest g resource users  # users 是 资源名称
 ```
 
+### 生成过滤器
+
+```bash
+$ nest g filter http-filter
+```
+
+### 生成拦截器
+
+```bash
+$ nest g interceptor http-interceptor
+```
+
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
