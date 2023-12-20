@@ -17,6 +17,6 @@ export class LoggerMiddleware implements NestMiddleware {
 
 // 功能中间件
 export function logger(req: Request, res: Response, next: NextFunction) {
-  console.log(`function middleware Request...`);
+  console.log(`function middleware Request...`, req.originalUrl);
   next();
 }
