@@ -3,7 +3,7 @@ import {
   NotFoundException,
   BadRequestException,
 } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Repository, DataSource } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreatePhotoDto } from './dto/create-photo.dto';
 import { UpdatePhotoDto } from './dto/update-photo.dto';
@@ -14,6 +14,7 @@ export class PhotosService {
   constructor(
     @InjectRepository(Photo)
     private photoRepository: Repository<Photo>,
+    private dataSource: DataSource,
   ) {}
   async create(createPhotoDto: CreatePhotoDto) {
     // return 'This action adds a new photo';
@@ -68,6 +69,26 @@ export class PhotosService {
     await this.photoRepository.save(photoToUpdate);
 
     return `Photo with ID ${id} updated successfully`;
+  }
+
+  // 创建一个事务
+  async createMany(photos: Photo[]) {
+    const queryRunner = this.dataSource.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      await queryRunner.manager.save(photos[0]);
+      await queryRunner.manager.save(photos[1]);
+
+      await queryRunner.commitTransaction();
+    } catch (err) {
+      // since we have errors lets rollback the changes we made
+      await queryRunner.rollbackTransaction();
+    } finally {
+      // you need to release a queryRunner which was manually instantiated
+      await queryRunner.release();
+    }
   }
 
   remove(id: number) {
