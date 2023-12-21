@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Res,
+  Query,
 } from '@nestjs/common';
 import { PhotosService } from './photos.service';
 import { CreatePhotoDto } from './dto/create-photo.dto';
@@ -32,8 +33,11 @@ export class PhotosController {
   }
 
   @Get()
-  async findAll() {
-    const result = await this.photosService.findAll();
+  async findAll(
+    @Query('pageNo') pageNo: number = 1,
+    @Query('pageSize') pageSize: number = 10,
+  ) {
+    const result = await this.photosService.findAll(pageNo, pageSize);
     return result;
   }
 

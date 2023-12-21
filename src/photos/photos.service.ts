@@ -28,9 +28,13 @@ export class PhotosService {
     return 'save success';
   }
 
-  async findAll() {
-    const photos = await this.photoRepository.find();
-    return photos;
+  async findAll(pageNo: number, pageSize: number) {
+    const photos = await this.photoRepository.find({
+      skip: (pageNo - 1) * pageSize,
+      take: pageSize,
+    });
+    const count = await this.photoRepository.count();
+    return { photos, totalCount: count };
   }
 
   findOne(id: number) {
