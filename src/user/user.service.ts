@@ -13,10 +13,11 @@ export class UserService {
   ) {}
 
   async register(createUser: CreateUserDto) {
-    const { username } = createUser;
+    // console.log('@@@@@createUser', createUser);
+    const { userName } = createUser;
 
     const existUser = await this.userRepository.findOne({
-      where: { username },
+      where: { userName },
     });
     if (existUser) {
       throw new HttpException('用户名已存在', HttpStatus.BAD_REQUEST);
