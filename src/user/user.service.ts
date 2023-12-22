@@ -44,7 +44,7 @@ export class UserService {
     if (pwd !== password) {
       throw new HttpException('密码错误', HttpStatus.BAD_REQUEST);
     } else {
-      return '登录成功';
+      return existUser;
     }
   }
 
