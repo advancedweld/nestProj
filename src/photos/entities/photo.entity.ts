@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { IsInt, IsString } from 'class-validator';
 
-import { User } from '../../users/entities/user.entity';
+import { Author } from '../../author/entities/author.entity';
 @Entity()
 export class Photo {
   @PrimaryGeneratedColumn()
@@ -36,8 +36,8 @@ export class Photo {
   @Column()
   isPublished: boolean;
 
-  @ManyToOne((type) => User, (user) => user.photos)
+  @ManyToOne((type) => Author, (author) => author.photos)
   // 关系所有者方需要添加JoinColumn 注解
   @JoinColumn()
-  user: User;
+  author: Author;
 }
