@@ -5,19 +5,34 @@ import {
   OneToMany,
   BaseEntity,
 } from 'typeorm';
-import { IsInt, IsString, isString } from 'class-validator';
+
 @Entity()
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  @IsString()
   username: string;
 
   @Column()
-  @IsString()
   password: string;
+
+  @Column()
+  email: string;
+
+  @Column({
+    name: 'create_time',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  createTime: Date;
+
+  @Column({
+    name: 'update_time',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  updateTime: Date;
 
   @Column({ nullable: true })
   avatar: string;

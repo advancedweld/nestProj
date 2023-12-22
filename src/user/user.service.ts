@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
@@ -11,6 +11,22 @@ export class UserService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
   ) {}
+
+  async register(createUser: CreateUserDto) {
+    const { username } = createUser;
+
+    const existUser = await this.userRepository.findOne({
+      where: { username },
+    });
+    if (existUser) {
+      throw new HttpException('用户名已存在', HttpStatus.BAD_REQUEST);
+    }
+
+    const newUser = await this.userRepository.create(createUser);
+    // 相当于
+    // const newUser = new User(createUser);
+    return await this.userRepository.save(newUser);
+  }
 
   create(createUserDto: CreateUserDto) {
     return 'This action adds a new user';
