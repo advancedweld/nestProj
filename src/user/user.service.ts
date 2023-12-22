@@ -1,7 +1,7 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-
+import { LoginUserDto } from './dto/login-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
@@ -27,6 +27,25 @@ export class UserService {
     // 相当于
     // const newUser = new User(createUser);
     return await this.userRepository.save(newUser);
+  }
+
+  async login(loginUser: LoginUserDto) {
+    console.log('@@@@@loginUser', loginUser);
+    const { userName, password } = loginUser;
+
+    const existUser = await this.userRepository.findOne({
+      where: { userName },
+    });
+    console.log('existUser', existUser);
+    if (!existUser) {
+      throw new HttpException('用户不存在', HttpStatus.BAD_REQUEST);
+    }
+    const pwd = existUser.password;
+    if (pwd !== password) {
+      throw new HttpException('密码错误', HttpStatus.BAD_REQUEST);
+    } else {
+      return '登录成功';
+    }
   }
 
   create(createUserDto: CreateUserDto) {

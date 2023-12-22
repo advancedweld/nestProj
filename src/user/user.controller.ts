@@ -11,6 +11,8 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { LoginUserDto } from './dto/login-user.dto';
+
 import { User } from './entities/user.entity';
 
 @Controller('user')
@@ -21,6 +23,12 @@ export class UserController {
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto) {
     const result = await this.userService.register(createUserDto);
+    return result;
+  }
+
+  @Post('login')
+  async login(@Body() loginUserDto: LoginUserDto) {
+    const result = await this.userService.login(loginUserDto);
     return result;
   }
 
