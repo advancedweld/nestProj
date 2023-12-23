@@ -30,6 +30,7 @@ export class UserController {
     return result;
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Post('login')
   async login(@Body() loginUserDto: LoginUserDto) {
     const result = await this.userService.login(loginUserDto);
