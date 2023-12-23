@@ -5,10 +5,10 @@ import {
   OneToMany,
   BaseEntity,
 } from 'typeorm';
-
+import { Exclude } from 'class-transformer';
 @Entity()
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column({
@@ -16,6 +16,8 @@ export class User extends BaseEntity {
   })
   userName: string;
 
+  // 返回的字段中不 包含password
+  @Exclude()
   @Column()
   password: string;
 

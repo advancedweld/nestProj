@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
+  ClassSerializerInterceptor,
   // ApiResponse,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -20,6 +22,8 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   // @ApiResponse({ status: 200, type: [User] })
+  //  应用序列化器 过滤返回字段中的敏感字段
+  @UseInterceptors(ClassSerializerInterceptor)
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto) {
     const result = await this.userService.register(createUserDto);
