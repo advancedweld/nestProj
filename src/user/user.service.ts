@@ -1,4 +1,5 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import bcryptjs from 'bcryptjs';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
@@ -14,15 +15,19 @@ export class UserService {
 
   async register(createUser: CreateUserDto) {
     // console.log('@@@@@createUser', createUser);
-    const { userName } = createUser;
+
+    const { userName, password } = createUser;
+
+    // 拿到注册时的密码开始加密，hash加密字符串
+    const hash = await bcryptjs.hashSync(password, 10);
 
     const existUser = await this.userRepository.findOne({
-      where: { userName },
+      where: { userName: userName },
     });
     if (existUser) {
       throw new HttpException('用户名已存在', HttpStatus.BAD_REQUEST);
     }
-
+    createUser.password = hash;
     const newUser = await this.userRepository.create(createUser);
     // 相当于
     // const newUser = new User(createUser);
@@ -40,8 +45,9 @@ export class UserService {
     if (!existUser) {
       throw new HttpException('用户不存在', HttpStatus.BAD_REQUEST);
     }
-    const pwd = existUser.password;
-    if (pwd !== password) {
+    const hashPwd = existUser.password;
+    const isOK = bcryptjs.compareSync(password, hashPwd);
+    if (!isOK) {
       throw new HttpException('密码错误', HttpStatus.BAD_REQUEST);
     } else {
       return '登录成功';
