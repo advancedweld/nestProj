@@ -1,5 +1,5 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import bcryptjs from 'bcryptjs';
+import * as bcryptjs from 'bcryptjs';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
@@ -14,8 +14,7 @@ export class UserService {
   ) {}
 
   async register(createUser: CreateUserDto) {
-    // console.log('@@@@@createUser', createUser);
-
+    console.log('@@@@@createUser', createUser);
     const { userName, password } = createUser;
 
     // 拿到注册时的密码开始加密，hash加密字符串

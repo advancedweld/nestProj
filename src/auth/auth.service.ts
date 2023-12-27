@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import * as bcryptjs from 'bcryptjs';
 import { User } from '../user/entities/user.entity';
+import { LoginUserDto } from '../user/dto/login-user.dto';
 @Injectable()
 export class AuthService {
   constructor(
@@ -31,14 +32,26 @@ export class AuthService {
     }
   }
 
-  async login(user: any) {
+  async authLogin(user: LoginUserDto) {
     // 准备jwt需要的负载
-    const payload = { username: user.username, sub: user.id };
-    return {
-      code: '200',
-      access_token: this.jwtService.sign(payload), // 配合存储着用户信息的负载 payload 来生成一个包含签名的JWT令牌(access_token)。。
-      msg: '登录成功',
-    };
+    const payload = { username: user.userName, sub: user.password };
+
+    const authResult = await this.validateUser(user.userName, user.password);
+
+    console.log('@@@@@@@authResult', authResult);
+    //验证是否是有效用户
+    if (authResult) {
+      return {
+        code: '200',
+        access_token: this.jwtService.sign(payload), // 配合存储着用户信息的负载 payload 来生成一个包含签名的JWT令牌(access_token)。。
+        msg: '登录成功',
+      };
+    } else {
+      return {
+        code: '1002',
+        msg: '请检查用户名或密码是否正确',
+      };
+    }
   }
 
   // 认证token是否合法

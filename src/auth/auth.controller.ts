@@ -21,7 +21,7 @@ export class AuthController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('login')
   async login(@Body() loginUserDto: LoginUserDto) {
-    const result = await this.authService.login(loginUserDto);
+    const result = await this.authService.authLogin(loginUserDto);
     return result;
   }
 }
