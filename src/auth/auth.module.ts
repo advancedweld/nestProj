@@ -17,5 +17,6 @@ const jwtModule = JwtModule.register({
   imports: [TypeOrmModule.forFeature([User]), PassportModule, jwtModule],
   controllers: [AuthController],
   providers: [AuthService, LocalStorage],
+  exports: [JwtModule],
 })
 export class AuthModule {}
