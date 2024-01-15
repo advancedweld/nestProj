@@ -14,6 +14,7 @@ import { config } from './ormconfig';
 import { AuthorModule } from './author/author.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { ChatModule } from './chat/chat.module';
 @Module({
   imports: [
     // 接入mysql数据库
@@ -24,6 +25,7 @@ import { AuthModule } from './auth/auth.module';
     AuthorModule,
     UserModule,
     AuthModule,
+    ChatModule,
   ],
   // 控制器始终属于一个模块，这就是我们在 @Module() 装饰器中包含 controllers 数组的原因。 由于我们还没有定义除根 AppModule 之外的任何其他模块，我们将使用它来引入 CatsController
   controllers: [AppController, CatsController, TranslateController],
