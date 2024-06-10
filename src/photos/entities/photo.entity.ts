@@ -5,7 +5,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { IsInt, IsString } from 'class-validator';
+import { IsInt, IsString, IsOptional } from 'class-validator';
 
 import { Author } from '../../author/entities/author.entity';
 @Entity()
@@ -23,14 +23,14 @@ export class Photo {
 
   // nullable声明可选参数
   @Column({ nullable: true })
+  @IsOptional()
   description: string;
 
   @Column()
   @IsString()
   filename: string;
 
-  @Column('int')
-  @IsInt()
+  @Column('int', { default: 0 })
   views: number;
 
   @Column()

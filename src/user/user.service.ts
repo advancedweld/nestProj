@@ -18,7 +18,7 @@ export class UserService {
     const { userName, password } = createUser;
 
     // 拿到注册时的密码开始加密，hash加密字符串
-    const hash = await bcryptjs.hashSync(password, 10);
+    const hash = bcryptjs.hashSync(password, 10);
 
     const existUser = await this.userRepository.findOne({
       where: { userName: userName },

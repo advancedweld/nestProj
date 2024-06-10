@@ -20,10 +20,10 @@ export class PhotosService {
     // return 'This action adds a new photo';
     const photo = new Photo();
     photo.name = createPhotoDto.name;
-    photo.description = createPhotoDto.description;
+    photo.description = createPhotoDto.description ?? '';
     photo.filename = createPhotoDto.filename;
     photo.totalPages = createPhotoDto.totalPages;
-    photo.views = 100 * Math.random();
+    photo.views = parseInt((100 * Math.random()).toFixed(0));
     photo.isPublished = true;
     await this.photoRepository.save(photo);
     return 'save success';
