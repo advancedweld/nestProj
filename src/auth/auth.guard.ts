@@ -17,7 +17,7 @@ import { Reflector } from '@nestjs/core';
 import { API_PREFIX } from '../config';
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor() {}
+  constructor(private readonly jwtService: JwtService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context.switchToHttp().getRequest();
@@ -28,10 +28,10 @@ export class AuthGuard implements CanActivate {
     if (_whiteList.includes(req.url)) return true;
 
     const request = context.switchToHttp().getRequest();
-    console.log(
-      '🚀 ~ file: auth.guard.ts:34 ~ AuthGuard ~ canActivate ~ request:',
-      request.headers,
-    );
+    // console.log(
+    //   '🚀 ~ file: auth.guard.ts:34 ~ AuthGuard ~ canActivate ~ request:',
+    //   request.headers,
+    // );
     const token = request.headers['authorization']?.split(' ')[1];
 
     if (!token) {
@@ -39,14 +39,29 @@ export class AuthGuard implements CanActivate {
     }
 
     try {
-      const jwtService = new JwtService();
-      const decoded = jwtService.verify(token);
+      const decoded = this.jwtService.verify(token);
+      console.log(
+        '🚀 ~ file: auth.guard.ts:43 ~ AuthGuard ~ canActivate ~ decoded:',
+        decoded,
+      );
+
       request.user = decoded;
       return true;
     } catch (error) {
+      console.log(
+        '🚀 ~ file: auth.guard.ts:47 ~ AuthGuard ~ canActivate ~ error:',
+        error,
+      );
+
       throw new UnauthorizedException('Invalid token');
     }
   }
 
-  private whiteList: string[] = ['/auth/register', '/auth/login', '/user/all'];
+  private whiteList: string[] = [
+    '/auth/register',
+    '/auth/login',
+    '/user/all',
+    '/user/register',
+  ];
+  // private whiteList: string[] = [];
 }
