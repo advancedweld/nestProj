@@ -14,4 +14,6 @@ export class CreateUserDto {
   updateTime: Date;
 
   avatar: string;
+
+  role: string;
 }

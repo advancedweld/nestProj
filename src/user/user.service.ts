@@ -15,7 +15,7 @@ export class UserService {
 
   async register(createUser: CreateUserDto) {
     console.log('@@@@@createUser', createUser);
-    const { userName, password } = createUser;
+    const { userName, password, email } = createUser;
 
     // 拿到注册时的密码开始加密，hash加密字符串
     const hash = bcryptjs.hashSync(password, 10);
@@ -27,9 +27,10 @@ export class UserService {
       throw new HttpException('用户名已存在', HttpStatus.BAD_REQUEST);
     }
     createUser.password = hash;
-    const newUser = await this.userRepository.create(createUser);
+    const newUser = this.userRepository.create(createUser);
     // 相当于
     // const newUser = new User(createUser);
+
     return await this.userRepository.save(newUser);
   }
 
@@ -60,7 +61,10 @@ export class UserService {
 
   async findAll() {
     const users = await this.userRepository.find();
-    return users;
+
+    const count = await this.userRepository.count();
+    return { users, totalCount: count };
+
     // return `This action returns all user`;
   }
 

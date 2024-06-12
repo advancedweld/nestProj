@@ -27,22 +27,28 @@ export class UserController {
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto) {
     const result = await this.userService.register(createUserDto);
+    console.log(
+      '🚀 ~ file: user.controller.ts:30 ~ UserController ~ register ~ result:',
+      result,
+    );
+
     return result;
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
-  @Post('login')
-  async login(@Body() loginUserDto: LoginUserDto) {
-    const result = await this.userService.login(loginUserDto);
-    return result;
-  }
+  // @UseInterceptors(ClassSerializerInterceptor)
+  // @Post('login')
+  // async login(@Body() loginUserDto: LoginUserDto) {
+  //   const result = await this.userService.login(loginUserDto);
+  //   return result;
+  // }
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
 
-  @Get()
+  // 获取所有用户信息
+  @Get('all')
   findAll() {
     return this.userService.findAll();
   }
@@ -52,7 +58,8 @@ export class UserController {
     return this.userService.findOne(+id);
   }
 
-  @Patch(':id')
+  // 更新用户数据
+  @Post('update')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto);
   }

@@ -7,7 +7,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { IStrategyOptions, Strategy } from 'passport-local';
 import { User } from 'src/user/entities/user.entity';
 
-export class LocalStorage extends PassportStrategy(Strategy) {
+export class LocalStratage extends PassportStrategy(Strategy) {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,

@@ -24,6 +24,13 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   email: string;
 
+  // 用户角色
+  @Column('simple-enum', { enum: ['root', 'vip', 'normal'] })
+  role: string;
+
+  @Column({ nullable: true })
+  hobby: string;
+
   @Column({
     name: 'create_time',
     type: 'timestamp',

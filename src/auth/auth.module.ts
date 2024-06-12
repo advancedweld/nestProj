@@ -4,7 +4,7 @@ import { AuthController } from './auth.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 import { User } from '../user/entities/user.entity';
-import { LocalStorage } from './local.stratage';
+import { LocalStratage } from './local.stratage';
 
 import { JwtModule } from '@nestjs/jwt';
 
@@ -16,7 +16,7 @@ const jwtModule = JwtModule.register({
 @Module({
   imports: [TypeOrmModule.forFeature([User]), PassportModule, jwtModule],
   controllers: [AuthController],
-  providers: [AuthService, LocalStorage],
+  providers: [AuthService, LocalStratage],
   exports: [JwtModule],
 })
 export class AuthModule {}

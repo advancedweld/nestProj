@@ -4,6 +4,8 @@
 - [github 在线聊天室](https://github.com/mcmcCat/mmcat-messaging-nest)
 - [掘金 在线聊天室2](https://juejin.cn/post/7296089060833722383)
 
+### 类验证器 https://docs.nestjs.com/pipes#class-validator
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
