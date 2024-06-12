@@ -19,6 +19,7 @@ export class LocalStratage extends PassportStrategy(Strategy) {
   }
 
   async validate(username: string, password: string) {
+    console.log('@@@@validate');
     const user = await this.userRepository
       .createQueryBuilder('user')
       .addSelect('user.password')

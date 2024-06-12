@@ -9,7 +9,7 @@ import {
   Req,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthGuard } from '@nestjs/passport';
+// import { AuthGuard } from '@nestjs/passport';
 import { LoginUserDto } from '../user/dto/login-user.dto';
 
 // @ApiTags('验证')
