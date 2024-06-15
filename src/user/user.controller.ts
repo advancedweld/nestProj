@@ -14,6 +14,7 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
+import { RolesGuard, Roles } from '../auth/guards/roles.guard';
 
 import { User } from './entities/user.entity';
 
@@ -48,6 +49,7 @@ export class UserController {
   }
 
   // 获取所有用户信息
+  @Roles('normal') // 仅允许 'admin' 角色访问
   @Get('all')
   findAll() {
     return this.userService.findAll();

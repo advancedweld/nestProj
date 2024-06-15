@@ -1,7 +1,7 @@
 /*
  * @Author: xiangshangzhi
  * @Date: 2024-06-12 11:36:25
- * @FilePath: \nestProj\src\auth\auth.guard.ts
+ * @FilePath: \nestProj\src\auth\guards\auth.guard.ts
  * @Description:https://juejin.cn/post/7281570246111576120?searchId=202406121135174412BF9344744A38FB72#heading-15
  https://juejin.cn/post/7295681529606832138
 */
@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Reflector } from '@nestjs/core';
-import { API_PREFIX } from '../config';
+import { API_PREFIX } from '../../config';
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(private readonly jwtService: JwtService) {}
@@ -28,10 +28,6 @@ export class AuthGuard implements CanActivate {
     if (_whiteList.includes(req.url)) return true;
 
     const request = context.switchToHttp().getRequest();
-    // console.log(
-    //   '🚀 ~ file: auth.guard.ts:34 ~ AuthGuard ~ canActivate ~ request:',
-    //   request.headers,
-    // );
     const token = request.headers['authorization']?.split(' ')[1];
 
     if (!token) {
@@ -57,11 +53,5 @@ export class AuthGuard implements CanActivate {
     }
   }
 
-  private whiteList: string[] = [
-    '/auth/register',
-    '/auth/login',
-    '/user/all',
-    '/user/register',
-  ];
-  // private whiteList: string[] = [];
+  private whiteList: string[] = ['/auth/login', '/user/register'];
 }

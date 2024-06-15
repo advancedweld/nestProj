@@ -33,17 +33,18 @@ export class AuthService {
   }
 
   async authLogin(user: LoginUserDto) {
-    // 准备jwt需要的负载
-    const payload = { username: user.userName, sub: user.password };
-
     const authResult = await this.validateUser(user.userName, user.password);
 
-    console.log('@@@@@@@authResult', authResult);
     //验证是否是有效用户
     if (authResult) {
+      // 准备jwt需要的负载
+      const payload = { username: authResult.userName, role: authResult.role };
+
+      console.log('@@@@@@@authResult', authResult);
+      const token = this.jwtService.sign(payload);
       return {
         code: '200',
-        access_token: this.jwtService.sign(payload), // 配合存储着用户信息的负载 payload 来生成一个包含签名的JWT令牌(access_token)。。
+        accessToken: token, // 配合存储着用户信息的负载 payload 来生成一个包含签名的JWT令牌(access_token)。。
         msg: '登录成功',
       };
     } else {

@@ -27,6 +27,7 @@ export class UserService {
       throw new HttpException('用户名已存在', HttpStatus.BAD_REQUEST);
     }
     createUser.password = hash;
+    createUser.role = 'normal';
     const newUser = this.userRepository.create(createUser);
     // 相当于
     // const newUser = new User(createUser);
