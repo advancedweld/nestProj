@@ -10,16 +10,46 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerMiddleware, logger } from './middleware/logger.middleware';
 import { PhotosModule } from './photos/photos.module';
 import { config } from './ormconfig';
-
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthorModule } from './author/author.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ChatModule } from './chat/chat.module';
-
+import * as path from 'path';
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath:
+        process.env.NODE_ENVIRONMENT === 'production'
+          ? path.join(process.cwd(), './env/.prod.env')
+          : path.join(process.cwd(), './env/.dev.env'),
+    }),
+
     // 接入mysql数据库
-    TypeOrmModule.forRoot(config),
+    /**
+     * https://juejin.cn/post/7032079740982788132?searchId=20240616102034C250FD4DB9401182B9F0#heading-12
+     * https://juejin.cn/post/7316202589603807259?searchId=20240616102034C250FD4DB9401182B9F0
+     */
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          type: 'mysql', // 数据库类型
+          entities: [], // 数据表实体
+          host: configService.get('DB_HOST'), // 主机，默认为localhost
+          port: configService.get<number>('DB_PORT', 3306), // 端口号
+          username: configService.get('DB_USER', 'root'), // 用户名
+          password: configService.get('DB_PASSWORD'), // 密码
+          database: configService.get('DB_DATABASE'), //数据库名
+          timezone: '+08:00', //服务器上配置的时区
+          synchronize: true, //根据实体自动创建数据库表， 生产环境建议关闭
+          //如果为true,将自动加载实体 forFeature()方法注册的每个实体都将自动添加到配置对象的实体数组中
+          autoLoadEntities: true,
+        };
+      },
+    }),
     TranslateModule,
     LionsModule,
     PhotosModule,
