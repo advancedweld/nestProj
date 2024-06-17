@@ -1,4 +1,9 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  NotFoundException,
+} from '@nestjs/common';
 import * as bcryptjs from 'bcryptjs';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -35,27 +40,6 @@ export class UserService {
     return await this.userRepository.save(newUser);
   }
 
-  // async login(loginUser: LoginUserDto) {
-  //   console.log('@@@@@loginUser', loginUser);
-  //   const { userName, password } = loginUser;
-
-  //   const existUser = await this.userRepository.findOne({
-  //     where: { userName },
-  //   });
-  //   console.log('existUser', existUser);
-  //   if (!existUser) {
-  //     throw new HttpException('用户不存在', HttpStatus.BAD_REQUEST);
-  //   }
-  //   const hashPwd = existUser.password;
-  //   const isOK = bcryptjs.compareSync(password, hashPwd);
-  //   if (!isOK) {
-  //     throw new HttpException('密码错误', HttpStatus.BAD_REQUEST);
-  //   } else {
-  //     // 登录
-  //     return existUser;
-  //   }
-  // }
-
   create(createUserDto: CreateUserDto) {
     return 'This action adds a new user';
   }
@@ -64,7 +48,13 @@ export class UserService {
     const users = await this.userRepository.find();
 
     const count = await this.userRepository.count();
-    return { users, totalCount: count };
+    const formattedUsers = users.map((user) => ({
+      userId: user.id,
+      // 复制其他用户字段
+      ...user,
+      id: undefined, // Remove the original `id` field if necessary
+    }));
+    return { users: formattedUsers, totalCount: count };
 
     // return `This action returns all user`;
   }
@@ -77,12 +67,14 @@ export class UserService {
     return `This action updates a #${id} user`;
   }
 
-  remove(userId: string) {
+  async remove(userId: string): Promise<void> {
     console.log(
       '🚀 ~ file: user.service.ts:81 ~ UserService ~ remove ~ userId:',
       userId,
     );
-    const result = this.userRepository.delete(userId);
-    return `This action removes a #${userId} user`;
+    const result = await this.userRepository.delete(userId);
+    if (result.affected === 0) {
+      throw new NotFoundException(`User with ID ${userId} not found`);
+    }
   }
 }

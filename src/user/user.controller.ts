@@ -37,20 +37,14 @@ export class UserController {
     return result;
   }
 
-  // @UseInterceptors(ClassSerializerInterceptor)
-  // @Post('login')
-  // async login(@Body() loginUserDto: LoginUserDto) {
-  //   const result = await this.userService.login(loginUserDto);
-  //   return result;
-  // }
-
+  @Roles('root')
   @Post('delete')
   delete(@Body() deleteUserDto: DeleteUserDto) {
     return this.userService.remove(deleteUserDto.userId);
   }
 
   // 获取所有用户信息
-  @Roles('normal') // 仅允许 'admin' 角色访问
+  @Roles('root') // 仅允许 'admin' 角色访问
   @Get('all')
   findAll() {
     return this.userService.findAll();
