@@ -28,8 +28,8 @@ import * as path from 'path';
 
     // 接入mysql数据库
     /**
-     * https://juejin.cn/post/7032079740982788132?searchId=20240616102034C250FD4DB9401182B9F0#heading-12
-     * https://juejin.cn/post/7316202589603807259?searchId=20240616102034C250FD4DB9401182B9F0
+     * https://juejin.cn/post/7032079740982788132#heading-12
+     * 环境配置： https://juejin.cn/post/7316202589603807259
      */
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
