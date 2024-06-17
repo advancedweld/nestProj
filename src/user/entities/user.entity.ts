@@ -6,6 +6,12 @@ import {
   BaseEntity,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
+
+export enum UserRole {
+  Root = 'root',
+  Vip = 'vip',
+  Normal = 'normal',
+}
 @Entity()
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -25,7 +31,7 @@ export class User extends BaseEntity {
   email: string;
 
   // 用户角色
-  @Column('simple-enum', { enum: ['root', 'vip', 'normal'] })
+  @Column('simple-enum', { enum: UserRole })
   role: string;
 
   @Column({ nullable: true })

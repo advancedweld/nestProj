@@ -8,10 +8,10 @@ import {
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { SetMetadata } from '@nestjs/common';
-
+import { UserRole } from '../../user/entities/user.entity';
 // 角色装饰器定义
 export const ROLES_KEY = 'roles';
-export const Roles = (...roles: string[]) => SetMetadata(ROLES_KEY, roles);
+export const Roles = (...roles: UserRole[]) => SetMetadata(ROLES_KEY, roles);
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -22,7 +22,10 @@ export class RolesGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     // 获取当前处理器上的角色元数据  也就是  @Roles('admin') 这种方式附加的，数组形式
-    const roles = this.reflector.get<string[]>(ROLES_KEY, context.getHandler());
+    const roles = this.reflector.get<UserRole[]>(
+      ROLES_KEY,
+      context.getHandler(),
+    );
     console.log(
       '🚀 ~ file: roles.guard.ts:26 ~ RolesGuard ~ canActivate ~ roles:',
       roles,

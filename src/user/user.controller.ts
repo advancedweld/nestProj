@@ -16,7 +16,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { DeleteUserDto } from './dto/delete-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { RolesGuard, Roles } from '../auth/guards/roles.guard';
-
+import { UserRole } from './entities/user.entity';
 import { User } from './entities/user.entity';
 
 @Controller('user')
@@ -37,19 +37,18 @@ export class UserController {
     return result;
   }
 
-  @Roles('root')
+  @Roles(UserRole.Root)
   @Post('delete')
   delete(@Body() deleteUserDto: DeleteUserDto) {
     return this.userService.remove(deleteUserDto.userId);
   }
 
   // 获取所有用户信息
-  @Roles('root') // 仅允许 'admin' 角色访问
+  @Roles(UserRole.Root) // 仅允许 'admin' 角色访问
   @Get('all')
   findAll() {
     return this.userService.findAll();
   }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
