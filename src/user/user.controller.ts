@@ -13,6 +13,7 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { DeleteUserDto } from './dto/delete-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { RolesGuard, Roles } from '../auth/guards/roles.guard';
 
@@ -43,9 +44,9 @@ export class UserController {
   //   return result;
   // }
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  @Post('delete')
+  delete(@Body() deleteUserDto: DeleteUserDto) {
+    return this.userService.remove(deleteUserDto.userId);
   }
 
   // 获取所有用户信息
@@ -64,10 +65,5 @@ export class UserController {
   @Post('update')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
   }
 }
