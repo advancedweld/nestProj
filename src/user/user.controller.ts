@@ -49,9 +49,13 @@ export class UserController {
   findAll() {
     return this.userService.findAll();
   }
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+
+  // 查看详情
+  //  应用序列化器 过滤返回字段中的敏感字段
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Post('detail')
+  findOne(@Param('userId') userId: string) {
+    return this.userService.findOne(userId);
   }
 
   // 更新用户数据

@@ -30,6 +30,13 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   email: string;
 
+  // 年龄
+  @Column({ nullable: true })
+  age: number;
+
+  // 性别
+  @Column({ nullable: true })
+  gender: 'male' | 'female';
   // 用户角色
   @Column('simple-enum', { enum: UserRole })
   role: string;
