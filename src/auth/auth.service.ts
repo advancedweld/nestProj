@@ -43,9 +43,9 @@ export class AuthService {
       console.log('@@@@@@@authResult', authResult);
       const token = this.jwtService.sign(payload);
       return {
-        code: '200',
+        userName: authResult.userName,
+        role: authResult.role,
         accessToken: token, // 配合存储着用户信息的负载 payload 来生成一个包含签名的JWT令牌(access_token)。。
-        msg: '登录成功',
       };
     } else {
       return {
