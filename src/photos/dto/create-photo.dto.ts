@@ -27,6 +27,8 @@ export class CreatePhotoDto {
   @IsOptional()
   isPublished?: boolean;
 
+  // 在dto中标记字段可选，在entity中不标记
+  @IsOptional()
   @IsInt()
   authorId: number;
 }
