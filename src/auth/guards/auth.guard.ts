@@ -36,10 +36,10 @@ export class AuthGuard implements CanActivate {
 
     try {
       const decoded = this.jwtService.verify(token);
-      console.log(
-        '🚀 ~ file: auth.guard.ts:43 ~ AuthGuard ~ canActivate ~ decoded:',
-        decoded,
-      );
+      // console.log(
+      //   '🚀 ~ file: auth.guard.ts:43 ~ AuthGuard ~ canActivate ~ decoded:',
+      //   decoded,
+      // );
 
       request.user = decoded;
       return true;

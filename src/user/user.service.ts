@@ -59,10 +59,13 @@ export class UserService {
     // return `This action returns all user`;
   }
 
-  findOne(userId: string) {
-    const existUser = this.userRepository.findOne({
+  async findOne(userId: string) {
+    console.log('🚀 ~ UserService ~ findOne ~ userId:', userId);
+
+    const existUser = await this.userRepository.findOne({
       where: { id: userId },
     });
+    console.log('🚀 ~ UserService ~ findOne ~ existUser:', existUser);
     return existUser;
   }
 
