@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateStasticDto } from './dto/create-stastic.dto';
 import { UpdateStasticDto } from './dto/update-stastic.dto';
-
 @Injectable()
 export class StasticsService {
   // {
