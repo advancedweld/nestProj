@@ -15,6 +15,7 @@ import { AuthorModule } from './author/author.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ChatModule } from './chat/chat.module';
+import { StasticsModule } from './stastics/stastics.module';
 import * as path from 'path';
 @Module({
   imports: [
@@ -57,6 +58,7 @@ import * as path from 'path';
     UserModule,
     AuthModule,
     ChatModule,
+    StasticsModule,
   ],
   // 控制器始终属于一个模块，这就是我们在 @Module() 装饰器中包含 controllers 数组的原因。 由于我们还没有定义除根 AppModule 之外的任何其他模块，我们将使用它来引入 CatsController
   controllers: [AppController, CatsController, TranslateController],

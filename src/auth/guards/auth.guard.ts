@@ -21,6 +21,7 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context.switchToHttp().getRequest();
+    console.log('🚀 ~ AuthGuard ~ canActivate ~ req:', req.url);
 
     // 如果是请求路由是白名单中的，则直接放行
     const _whiteList = this.whiteList.map((url) => `/${API_PREFIX}${url}`);
@@ -53,5 +54,5 @@ export class AuthGuard implements CanActivate {
     }
   }
 
-  private whiteList: string[] = ['/auth/login', '/user/register'];
+  private whiteList: string[] = ['/auth/login', '/user/register', '/stastics'];
 }

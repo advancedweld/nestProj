@@ -29,10 +29,6 @@ export class UserController {
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto) {
     const result = await this.userService.register(createUserDto);
-    console.log(
-      '🚀 ~ file: user.controller.ts:30 ~ UserController ~ register ~ result:',
-      result,
-    );
 
     return result;
   }
