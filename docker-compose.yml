@@ -5,6 +5,6 @@ services:
     ports:
       - "3000:3000"
     image: nest-image
-    container_name: nest-system
+    container_name: nest-system-container
     environment:
       NODE_ENV: production

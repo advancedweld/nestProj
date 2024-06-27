@@ -14,9 +14,27 @@ docker system prune -a
 # 删除所有未使用容器
 docker system prune
 
+### 只构建镜像
+
+```
+docker-compose  --build 
+
+```
+
+### 清理悬空镜像
+
+```
+
+docker rmi $(docker images -f "dangling=true" -q)
+
+```
+
+
+
 # 服务器启动
 docker run -d -p 10001:10001 --name nest-system -e NODE_ENV=production nest-image:latest
 
 
 # 查看日志，一般用来排查问题
 docker logs container-name
+

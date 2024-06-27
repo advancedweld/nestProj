@@ -90,19 +90,23 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 Nest is [MIT licensed](LICENSE).
 
 
-### 构建镜像
+### 构建镜像并启动容器
 
 ```
 docker-compose up --build -d
 
 ```
 
+
 ### 导出tar包
 
 ```
 docker save -o nest-system.tar nest-image:latest
 
+
 ```
+
+
 
 ## 在云服务器上启动
 
