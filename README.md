@@ -7,7 +7,7 @@
 ### 类验证器 https://docs.nestjs.com/pipes#class-validator
 
 ### 阿里云ubuntu安装docker: https://developer.aliyun.com/article/762674
-https://zhuanlan.zhihu.com/p/675938110
+ **直接用apt简单安装方法： https://zhuanlan.zhihu.com/p/675938110**
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
@@ -88,3 +88,34 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+
+### 构建镜像
+
+```
+docker-compose up --build -d
+
+```
+
+### 导出tar包
+
+```
+docker save -o nest-system.tar nest-image:latest
+
+```
+
+## 在云服务器上启动
+
+- **解压镜像tar包**
+
+```
+docker load -i /home/ubuntu/nest-system.tar
+
+```
+
+- **运行docker容器**
+
+```
+docker run -d -p 3000:3000 --name nest-system -e NODE_ENV=production nest-image:latest
+
+```
