@@ -22,7 +22,7 @@ import * as path from 'path';
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath:
-        process.env.NODE_ENVIRONMENT === 'production'
+        process.env.NODE_ENV === 'production'
           ? path.join(process.cwd(), './env/.prod.env')
           : path.join(process.cwd(), './env/.dev.env'),
     }),
@@ -36,8 +36,8 @@ import * as path from 'path';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
-        return {
-          type: 'mysql', // 数据库类型
+        const config = {
+          type: 'mysql' as const, // 数据库类型
           entities: [], // 数据表实体
           host: configService.get('DB_HOST'), // 主机，默认为localhost
           port: configService.get<number>('DB_PORT', 3306), // 端口号
@@ -49,6 +49,7 @@ import * as path from 'path';
           //如果为true,将自动加载实体 forFeature()方法注册的每个实体都将自动添加到配置对象的实体数组中
           autoLoadEntities: true,
         };
+        return config;
       },
     }),
     TranslateModule,
