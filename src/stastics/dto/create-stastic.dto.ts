@@ -1,4 +1,5 @@
-import { IsArray, IsOptional, IsObject } from 'class-validator';
+import { IsArray, IsOptional, IsObject, IsNotEmpty } from 'class-validator';
+import { FPSDto } from './fps.dto';
 
 export class CreateStasticDto {
   @IsArray()
@@ -11,7 +12,8 @@ export class CreateStasticDto {
 
   @IsArray()
   @IsOptional()
-  fps: number[];
+  @IsNotEmpty({ each: true }) // 如果 fps 数组存在，确保它不是空数组
+  fps: FPSDto[];
 
   @IsArray()
   @IsOptional()

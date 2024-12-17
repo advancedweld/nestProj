@@ -19,15 +19,19 @@ export class StasticsController {
 
   @Post()
   create(@Body() createStasticDto: string) {
-    let parsedData;
+    let parsedData: CreateStasticDto;
     try {
       parsedData = JSON.parse(createStasticDto);
+
+      // 校验dto 格式
+      const validatedData = new CreateStasticDto();
+      Object.assign(validatedData, parsedData);
     } catch (error) {
       console.error('Error parsing JSON:', error);
       throw new Error('Invalid JSON data');
     }
 
-    console.log('🚀 ~ StasticsController ~ create ~ parsedData:', parsedData);
+    // console.log('🚀 ~ StasticsController ~ create ~ parsedData:', parsedData);
     return this.stasticsService.create(parsedData);
   }
 
