@@ -18,7 +18,7 @@ docker load -i $IMAGE_FILE
 # 检查镜像是否成功加载
 if docker images | grep -q "$IMAGE_NAME"; then
   echo "镜像加载成功，启动容器..."
-  docker run -d -p 8004:80 --name $CONTAINER_NAME -e NODE_ENV=production $IMAGE_NAME:$IMAGE_TAG
+  docker run -d -p 3000:3000 --name $CONTAINER_NAME -e NODE_ENV=production $IMAGE_NAME:$IMAGE_TAG
 else
   echo "镜像加载失败或未找到指定的镜像标签。"
 fi

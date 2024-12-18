@@ -9,7 +9,7 @@ import { LionsModule } from './lions/lions.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerMiddleware, logger } from './middleware/logger.middleware';
 import { PhotosModule } from './photos/photos.module';
-import { config } from './ormconfig';
+// import { config } from './ormconfig';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthorModule } from './author/author.module';
 import { UserModule } from './user/user.module';
