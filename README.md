@@ -7,7 +7,8 @@
 ### 类验证器 https://docs.nestjs.com/pipes#class-validator
 
 ### 阿里云ubuntu安装docker: https://developer.aliyun.com/article/762674
- **直接用apt简单安装方法： https://zhuanlan.zhihu.com/p/675938110**
+
+**直接用apt简单安装方法： https://zhuanlan.zhihu.com/p/675938110**
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
@@ -72,8 +73,8 @@ $ yarn run test:e2e
 $ yarn run test:cov
 ```
 
+- 部署可以用**pm2** 参考： https://juejin.cn/post/7346102132863189030
 
-* 部署可以用**pm2** 参考： https://juejin.cn/post/7346102132863189030
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
@@ -89,7 +90,6 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 Nest is [MIT licensed](LICENSE).
 
-
 ### 构建镜像并启动容器
 
 ```
@@ -97,16 +97,13 @@ docker-compose up --build -d
 
 ```
 
-
 ### 导出tar包
 
 ```
-docker save -o nest-system.tar nest-image:latest
+docker save -o app.tar nest-image:latest
 
 
 ```
-
-
 
 ## 在云服务器上启动
 
