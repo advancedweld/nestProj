@@ -1,7 +1,17 @@
-import { IsArray, IsOptional, IsObject, IsNotEmpty } from 'class-validator';
+import {
+  IsArray,
+  IsOptional,
+  IsObject,
+  IsNotEmpty,
+  IsString,
+} from 'class-validator';
 import { FPSDto } from './fps.dto';
 
 export class CreateStasticDto {
+  @IsOptional()
+  @IsString()
+  clientIp?: string;
+
   @IsArray()
   @IsObject({ each: true })
   networkDelay: any[];

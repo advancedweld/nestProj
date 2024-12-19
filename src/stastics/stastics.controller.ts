@@ -8,6 +8,7 @@ import {
   Delete,
   UsePipes,
   ValidationPipe,
+  Req,
 } from '@nestjs/common';
 import { StasticsService } from './stastics.service';
 import { CreateStasticDto } from './dto/create-stastic.dto';
@@ -18,14 +19,21 @@ export class StasticsController {
   constructor(private readonly stasticsService: StasticsService) {}
 
   @Post()
-  create(@Body() createStasticDto: string) {
+  create(@Body() createStasticDto: string, @Req() req: Request) {
     let parsedData: CreateStasticDto;
     try {
       parsedData = JSON.parse(createStasticDto);
 
-      // 校验dto 格式
-      const validatedData = new CreateStasticDto();
-      Object.assign(validatedData, parsedData);
+      // 获取客户端的真实IP
+      const clientIp =
+        req.headers['x-forwarded-for'] ||
+        req.headers['x-real-ip'] ||
+        req.connection.remoteAddress;
+
+      console.log('🚀 ~ StasticsController ~ create ~ clientIp:', clientIp);
+
+      // 处理客户端的 IP
+      parsedData.clientIp = Array.isArray(clientIp) ? clientIp[0] : clientIp;
     } catch (error) {
       console.error('Error parsing JSON:', error);
       throw new Error('Invalid JSON data');

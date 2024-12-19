@@ -33,7 +33,9 @@ export class StasticsService {
 
     try {
       // 创建一个新的 Statistics 实体
-      const stastics = this.stasticsRepository.create();
+      const stastics = this.stasticsRepository.create({
+        clientIp: createStasticDto.clientIp,
+      });
 
       // 保存 NetworkDelay 数据
       const networkDelays = createStasticDto.networkDelay.map((data) =>

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, OneToMany, Column } from 'typeorm';
 import { NetworkDelay } from './network-delay.entity';
 import { ApiLatency } from './api-latency.entity';
 import { FPS } from './fps.entity';
@@ -8,6 +8,9 @@ import { Error } from './error.entity';
 export class Stastics {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({ nullable: true })
+  clientIp: string;
 
   @OneToMany(() => NetworkDelay, (networkDelay) => networkDelay.stastics, {
     cascade: true,
