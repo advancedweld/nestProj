@@ -13,7 +13,7 @@ import {
 import { StasticsService } from './stastics.service';
 import { CreateStasticDto } from './dto/create-stastic.dto';
 import { UpdateStasticDto } from './dto/update-stastic.dto';
-
+import { Request } from 'express';
 @Controller('stastics')
 export class StasticsController {
   constructor(private readonly stasticsService: StasticsService) {}
@@ -25,10 +25,11 @@ export class StasticsController {
       parsedData = JSON.parse(createStasticDto);
 
       // 获取客户端的真实IP
+      //
       const clientIp =
         req.headers['x-forwarded-for'] ||
         req.headers['x-real-ip'] ||
-        req.connection.remoteAddress;
+        req.socket.remoteAddress;
 
       console.log('🚀 ~ StasticsController ~ create ~ clientIp:', clientIp);
 
